@@ -3,7 +3,7 @@ var promiseCancel = require('promise-cancel');
 /**
  * provisor: Promise super visor. Make promise cancelable and give extra functionalities about handling promise handlers with seperate code from yours.
  */
-const provisor = {
+var provisor = {
 	namespace: {}
 };
 
@@ -11,7 +11,7 @@ const provisor = {
  * @param {String} ns: Namespace to add
  * @returns {undefined}
  */
-provisor.addNamespace = (ns) => {
+provisor.addNamespace = function(ns) {
 	if(!provisor.namespace[ns]) {
 		provisor.namespace[ns] = {};
 	}
@@ -23,7 +23,7 @@ provisor.addNamespace = (ns) => {
  * @param {String} ns: Namespace to remove
  * @returns {undefined}
  */
-provisor.removeNamespace = (ns) => {
+provisor.removeNamespace = function(ns) {
 	if(provisor.namespace[ns]) {
 		delete provisor.namespace[ns];
 	}
@@ -35,7 +35,7 @@ provisor.removeNamespace = (ns) => {
  * @param {String} ns: Namespace to check
  * @returns {Boolean} Return true if it has
  */
-provisor.hasNamespace = (ns) => {
+provisor.hasNamespace = function(ns) {
 	return !!provisor.namespace[ns];
 };
 
@@ -46,14 +46,14 @@ provisor.hasNamespace = (ns) => {
  * @param {Object} options: Option object
  * @returns {Promise} New created Promise
  */
-provisor.save = (ns, k, p, options) => {
+provisor.save = function(ns, k, p, options) {
 	if(!provisor.namespace[ns]) {
 		throw new Error(`Cannot found namespace ${ns} in Provisor`);
 	}
 
 	provisor.namespace[ns][k] = promiseCancel(p, options);
 
-	p.then(() => {
+	p.then(function() {
 		if(provisor.namespace[ns]) {
 			delete provisor.namespace[ns][k];
 		}
@@ -67,7 +67,7 @@ provisor.save = (ns, k, p, options) => {
  * @param {String} k: Identifier that want to cancel
  * @returns {undefined}
  */
-provisor.cancel = (ns, k) => {
+provisor.cancel = function(ns, k) {
 	if(!provisor.namespace[ns]) {
 		throw new Error(`Cannot found namespace ${ns} in Provisor`);
 	}
@@ -82,12 +82,12 @@ provisor.cancel = (ns, k) => {
  * @param {String} ns: Namespace
  * @returns {undefined}
  */
-provisor.cancelAll = (ns) => {
+provisor.cancelAll = function(ns) {
 	if(!provisor.namespace[ns]) {
 		throw new Error(`Cannot found namespace ${ns} in Provisor`);
 	}
 
-	const currentNs = provisor.namespace[ns];
+	var currentNs = provisor.namespace[ns];
 
 	for(var key in currentNs) {
 		provisor.cancel(ns, key);
@@ -100,7 +100,7 @@ provisor.cancelAll = (ns) => {
  * @param {String} ns: Namespace
  * @returns {Object} New object that has same functionalities of provisor, except it's automatically binded specified namespace ns.
  */
-provisor.use = (ns) => {
+provisor.use = function(ns) {
 	return {
 		save(k, p, o) {
 			return provisor.save(ns, k, p, o);
