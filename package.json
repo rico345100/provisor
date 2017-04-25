@@ -1,6 +1,6 @@
 {
   "name": "provisor",
-  "version": "1.0.1",
+  "version": "1.0.11",
   "description": "Provisor is a simple promise super visor with cancelable functionality",
   "main": "index.js",
   "scripts": {

@@ -48,7 +48,7 @@ provisor.hasNamespace = function(ns) {
  */
 provisor.save = function(ns, k, p, options) {
 	if(!provisor.namespace[ns]) {
-		throw new Error(`Cannot found namespace ${ns} in Provisor`);
+		throw new Error('Cannot found namespace ' + ns + ' in Provisor');
 	}
 
 	provisor.namespace[ns][k] = promiseCancel(p, options);
@@ -69,7 +69,7 @@ provisor.save = function(ns, k, p, options) {
  */
 provisor.cancel = function(ns, k) {
 	if(!provisor.namespace[ns]) {
-		throw new Error(`Cannot found namespace ${ns} in Provisor`);
+		throw new Error('Cannot found namespace ' + ns + ' in Provisor');
 	}
 
 	provisor.namespace[ns][k].cancel();
@@ -84,7 +84,7 @@ provisor.cancel = function(ns, k) {
  */
 provisor.cancelAll = function(ns) {
 	if(!provisor.namespace[ns]) {
-		throw new Error(`Cannot found namespace ${ns} in Provisor`);
+		throw new Error('Cannot found namespace ' + ns + ' in Provisor');
 	}
 
 	var currentNs = provisor.namespace[ns];
