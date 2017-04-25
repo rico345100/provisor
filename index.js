@@ -102,16 +102,16 @@ provisor.cancelAll = function(ns) {
  */
 provisor.use = function(ns) {
 	return {
-		save(k, p, o) {
+		save: function(k, p, o) {
 			return provisor.save(ns, k, p, o);
 		},
-		cancel(k) {
+		cancel: function(k) {
 			return provisor.cancel(ns, k);
 		},
-		cancelAll() {
+		cancelAll: function() {
 			return provisor.cancelAll(ns);
 		},
-		remove() {
+		remove: function() {
 			return provisor.removeNamespace(ns);
 		}
 	};
